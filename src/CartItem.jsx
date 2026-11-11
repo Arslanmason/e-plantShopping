@@ -9,32 +9,53 @@ const CartItem = ({ onContinueShopping }) => {
 
   // Calculate total amount for all products in the cart
   const calculateTotalAmount = () => {
- 
+    let total = 0;
+    cart.forEach((item) => {
+        let cost = parseFloat(item.cost.replace('$', ''));
+        total += item.quantity * cost;
+    });
+    return total.toFixed(2);
+  };
+  
+  const calculateTotalItems = () => {
+     let total = 0;
+     cart.forEach((item) => {
+         total += item.quantity;
+     });
+     return total;
   };
 
   const handleContinueShopping = (e) => {
-   
+    e.preventDefault();
+    onContinueShopping();
   };
 
-
-
   const handleIncrement = (item) => {
+    dispatch(updateQuantity({ name: item.name, quantity: item.quantity + 1 }));
   };
 
   const handleDecrement = (item) => {
-   
+    if (item.quantity > 1) {
+        dispatch(updateQuantity({ name: item.name, quantity: item.quantity - 1 }));
+    } else {
+        dispatch(removeItem(item.name));
+    }
   };
 
   const handleRemove = (item) => {
+    dispatch(removeItem(item.name));
   };
 
   // Calculate total cost based on quantity for an item
   const calculateTotalCost = (item) => {
+     let cost = parseFloat(item.cost.replace('$', ''));
+     return (item.quantity * cost).toFixed(2);
   };
 
   return (
     <div className="cart-container">
       <h2 style={{ color: 'black' }}>Total Cart Amount: ${calculateTotalAmount()}</h2>
+      <h3 style={{ color: 'black' }}>Total Items: {calculateTotalItems()}</h3>
       <div>
         {cart.map(item => (
           <div className="cart-item" key={item.name}>
@@ -57,12 +78,10 @@ const CartItem = ({ onContinueShopping }) => {
       <div className="continue_shopping_btn">
         <button className="get-started-button" onClick={(e) => handleContinueShopping(e)}>Continue Shopping</button>
         <br />
-        <button className="get-started-button1">Checkout</button>
+        <button className="get-started-button1" onClick={() => alert('Coming Soon')}>Checkout</button>
       </div>
     </div>
   );
 };
 
 export default CartItem;
-
-
