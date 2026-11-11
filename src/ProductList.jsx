@@ -16,25 +16,34 @@ function ProductList({ onHomeClick }) {
         {
             category: "Air Purifying",
             plants: [
-                { name: 'Snake Plant', cost: '$15', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fprickleplants.co.uk%2Fcdn%2Fshop%2Fproducts%2Fafacd46a-01de-4899-bc25-9729a4c992cc_1445x.jpg%3Fv%3D1661164092&f=1&nofb=1&ipt=1c40ea812c6c926c345109a62151596dfaf07abbb164738dc98ad60bd142b866&ipo=images' },
-                { name: 'Spider Plant', cost: '$12', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.mos.cms.futurecdn.net%2FTV5qJiYi73bmPocSrjMRck.jpg&f=1&nofb=1&ipt=5c425e5eb08c4ddd182249adde2c72e705ab622947a7c53fb83374d58f6562ef&ipo=images' },
-                { name: 'Peace Lily', cost: '$18', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fbouqs.com%2Fblog%2Fwp-content%2Fuploads%2F2022%2F11%2Fpeace-lily-care.jpg&f=1&nofb=1&ipt=92cd1b5d1f5c55814c11555d4b874fd878691a8e318535569621b050b1be8c30&ipo=images' },
+                { name: 'Snake Plant', cost: '$15', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fprickleplants.co.uk%2Fcdn%2Fshop%2Fproducts%2Fafacd46a-01de-4899-bc25-9729a4c992cc_1445x.jpg&f=1&nofb=1' },
+                { name: 'Spider Plant', cost: '$12', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.mos.cms.futurecdn.net%2FTV5qJiYi73bmPocSrjMRck.jpg&f=1&nofb=1' },
+                { name: 'Peace Lily', cost: '$18', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fbouqs.com%2Fblog%2Fwp-content%2Fuploads%2F2022%2F11%2Fpeace-lily-care.jpg&f=1&nofb=1' },
+                { name: 'English Ivy', cost: '$14', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.gardeningknowhow.com%2Fwp-content%2Fuploads%2F2014%2F05%2Fenglish-ivy.jpg&f=1&nofb=1' },
+                { name: 'Rubber Plant', cost: '$17', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F0059%2F8835%2F2052%2Fproducts%2FRubber_Plant_4_1024x1024.jpg&f=1&nofb=1' },
+                { name: 'ZZ Plant', cost: '$18', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F0150%2F6262%2Fproducts%2Fthe-sill_zz-plant_variant_medium_grant_mint.jpg&f=1&nofb=1' }
             ]
         },
         {
             category: "Succulents",
             plants: [
-                { name: 'Aloe Vera', cost: '$10', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs3.amazonaws.com%2Fplantvillage-production-new%2Fimages%2Fpics%2F000%2F000%2F512%2Foriginal%2F800px-Aloe_Vera.jpg%3F1367951467&f=1&nofb=1&ipt=a0200a4119ba6aa0ec19154b24df3f800c8f55b8bb43b867a98f2cd3d0f046c6&ipo=images' },
-                { name: 'Jade Plant', cost: '$14', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.mos.cms.futurecdn.net%2F2PE5fFa3XthNoH6Jzt7ztJ-1024-80.jpg&f=1&nofb=1&ipt=474ae26e224809ffb707da51e0b09ec91f8e7644fb7aa2e063aafd6a1680f15f&ipo=images' },
-                { name: 'Echeveria', cost: '$11', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.myplantsvalley.com%2Fwp-content%2Fuploads%2F2025%2F02%2FFahmida_Echeveria_succulents_18dfa9c0-7de5-46f9-be36-88cedd4db962.png&f=1&nofb=1&ipt=0b4ffe01cb4ecce6b97f1feb416f52483893ffd34a94937f817cd59d6dd9bb4e&ipo=images' }
+                { name: 'Aloe Vera', cost: '$10', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs3.amazonaws.com%2Fplantvillage-production-new%2Fimages%2Fpics%2F000%2F000%2F512%2Foriginal%2F800px-Aloe_Vera.jpg&f=1&nofb=1' },
+                { name: 'Jade Plant', cost: '$14', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.mos.cms.futurecdn.net%2F2PE5fFa3XthNoH6Jzt7ztJ-1024-80.jpg&f=1&nofb=1' },
+                { name: 'Echeveria', cost: '$11', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.myplantsvalley.com%2Fwp-content%2Fuploads%2F2025%2F02%2FFahmida_Echeveria_succulents_18dfa9c0-7de5-46f9-be36-88cedd4db962.png&f=1&nofb=1' },
+                { name: 'Zebra Plant', cost: '$12', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F0062%2F8534%2F5862%2Fproducts%2FHaworthia-fasciata-Zebra-Plant-1_1024x1024.jpg&f=1&nofb=1' },
+                { name: 'String of Pearls', cost: '$15', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.joyusgarden.com%2Fwp-content%2Fuploads%2F2018%2F10%2Fstring-of-pearls-care-1.jpg&f=1&nofb=1' },
+                { name: 'Burros Tail', cost: '$13', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fsucculentsbox.com%2Fcdn%2Fshop%2Farticles%2Fsedum-morganianum-burros-tail-succulent-care-guide-1_1024x1024.jpg&f=1&nofb=1' }
             ]
         },
         {
             category: "Ferns",
             plants: [
-                { name: 'Boston Fern', cost: '$16', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages.esellerpro.com%2F3048%2FI%2F619%2F66%2FNephrolepis%2520boston%2520fern-10.jpg&f=1&nofb=1&ipt=b878df4b4b61c44452b8fba95270c71bcea78029765c23cd722cddd6e16e17d2&ipo=images' },
-                { name: 'Bird Nest Fern', cost: '$20', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.apartmenttherapy.info%2Fimage%2Fupload%2Ff_auto%2Cq_auto%3Aeco%2Cw_730%2Fgen-workflow%2Fproduct-listing%2Fbirdsnestfernamz&f=1&nofb=1&ipt=827bb20317367cd056d584bd13f2ec96aa3ab947edf06dcf11dc09739cf40d26&ipo=images' },
-                { name: 'Maidenhair Fern', cost: '$19', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.bhg.com%2Fthmb%2FSuzTKTvdz1Hkk7QHuxtc5LZui88%3D%2F1245x0%2Ffilters%3Ano_upscale()%3Astrip_icc()%2Fsouthern-maidenhair-fern-b67327b2-755015db4d8b4557b6fac4535ad09343.jpg&f=1&nofb=1&ipt=b18b9adf40714a0d497d54f54379a457a67d85e9da562955dbe2b414afedc4c7&ipo=images' }
+                { name: 'Boston Fern', cost: '$16', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages.esellerpro.com%2F3048%2FI%2F619%2F66%2FNephrolepis%2520boston%2520fern-10.jpg&f=1&nofb=1' },
+                { name: 'Bird Nest Fern', cost: '$20', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.apartmenttherapy.info%2Fimage%2Fupload%2Ff_auto%2Cq_auto%3Aeco%2Cw_730%2Fgen-workflow%2Fproduct-listing%2Fbirdsnestfernamz&f=1&nofb=1' },
+                { name: 'Maidenhair Fern', cost: '$19', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.bhg.com%2Fthmb%2FSuzTKTvdz1Hkk7QHuxtc5LZui88%3D%2F1245x0%2Ffilters%3Ano_upscale()%3Astrip_icc()%2Fsouthern-maidenhair-fern-b67327b2-755015db4d8b4557b6fac4535ad09343.jpg&f=1&nofb=1' },
+                { name: 'Staghorn Fern', cost: '$22', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.gardeningknowhow.com%2Fwp-content%2Fuploads%2F2011%2F01%2Fstaghorn-fern-1.jpg&f=1&nofb=1' },
+                { name: 'Kangaroo Paw Fern', cost: '$18', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.houseplantsexpert.com%2Fassets%2Fimages%2Fkangaroo-paw-fern.jpg&f=1&nofb=1' },
+                { name: 'Kimberly Queen Fern', cost: '$17', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F0059%2F8835%2F2052%2Fproducts%2FKimberly_Queen_Fern_4_1024x1024.jpg&f=1&nofb=1' }
             ]
         }
     ];
