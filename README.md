@@ -1,4 +1,4 @@
-# Paradise Nursery
+# Paradise Nursery e-plantShopping
 
 A React-based shopping application for houseplants. This project demonstrates front-end web development skills including component creation, state management with Redux, and dynamic UI rendering.
 
