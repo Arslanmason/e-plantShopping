@@ -1,179 +1,102 @@
-// ProductList.jsx
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from './CartSlice';
 import CartItem from './CartItem';
 import './ProductList.css';
 
-const FALLBACK_IMAGE = `data:image/svg+xml,${encodeURIComponent(`
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420">
-    <rect width="640" height="420" fill="#e8efe4"/>
-    <path d="M320 330V185" stroke="#52734d" stroke-width="18" stroke-linecap="round"/>
-    <path d="M317 246c-98 4-139-47-136-119 73-3 127 25 136 119Z" fill="#78966c"/>
-    <path d="M325 218c3-87 57-137 133-139 1 75-43 128-133 139Z" fill="#91a983"/>
-    <path d="M250 333h140l-18 52h-104z" fill="#bd8769"/>
-  </svg>
-`)}`;
+function ProductList({ onHomeClick }) {
+    const [showCart, setShowCart] = useState(false);
+    const dispatch = useDispatch();
+    const cartItems = useSelector(state => state.cart.items);
+    
+    // Calculate total quantity of items for the cart icon
+    const totalCartQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
 
-const plantsArray = [
-  {
-    category: 'Air Purifying Plants',
-    plants: [
-      { id: 'snake-plant-air', name: 'Snake Plant', image: 'https://images.unsplash.com/photo-1593696954577-ab3d39317b97?auto=format&fit=crop&w=900&q=80', description: 'An architectural, easy-care plant that tolerates lower light.', cost: '$15' },
-      { id: 'spider-plant', name: 'Spider Plant', image: 'https://images.unsplash.com/photo-1614594975525-e45190c55d40?auto=format&fit=crop&w=900&q=80', description: 'A graceful, adaptable plant with arching, striped leaves.', cost: '$12' },
-      { id: 'peace-lily', name: 'Peace Lily', image: 'https://images.unsplash.com/photo-1593696954577-ab3d39317b97?auto=format&fit=crop&w=900&q=80', description: 'Glossy leaves and elegant blooms make this a calm indoor favorite.', cost: '$18' },
-      { id: 'boston-fern', name: 'Boston Fern', image: 'https://images.unsplash.com/photo-1612450534289-4beec1767672?auto=format&fit=crop&w=900&q=80', description: 'Feathery green fronds add a lush look; keep its soil lightly moist.', cost: '$20' },
-      { id: 'rubber-plant', name: 'Rubber Plant', image: 'https://images.unsplash.com/photo-1509423350716-97f9360b4e09?auto=format&fit=crop&w=900&q=80', description: 'A bold, upright houseplant with striking, glossy leaves.', cost: '$17' },
-      { id: 'aloe-air', name: 'Aloe Vera', image: 'https://images.unsplash.com/photo-1596547609652-9fc5d8d428ae?auto=format&fit=crop&w=900&q=80', description: 'A sun-loving succulent with fleshy, distinctive leaves.', cost: '$14' },
-    ],
-  },
-  {
-    category: 'Aromatic Fragrant Plants',
-    plants: [
-      { id: 'lavender', name: 'Lavender', image: 'https://images.unsplash.com/photo-1611909023032-2d6b3134ecba?auto=format&fit=crop&w=900&q=80', description: 'Fragrant purple blooms bring a soothing scent to sunny spaces.', cost: '$20' },
-      { id: 'jasmine', name: 'Jasmine', image: 'https://images.unsplash.com/photo-1592729645009-b96d1e63d14b?auto=format&fit=crop&w=900&q=80', description: 'Delicate flowers are known for their sweet fragrance.', cost: '$18' },
-      { id: 'rosemary', name: 'Rosemary', image: 'https://images.unsplash.com/photo-1615485500704-8e990f9900f5?auto=format&fit=crop&w=900&q=80', description: 'An aromatic herb that works well in a sunny kitchen or garden.', cost: '$15' },
-      { id: 'mint', name: 'Mint', image: 'https://images.unsplash.com/photo-1628556270448-4d4e4148e1b1?auto=format&fit=crop&w=900&q=80', description: 'Fresh, fragrant leaves for containers, teas, and cooking.', cost: '$12' },
-      { id: 'lemon-balm', name: 'Lemon Balm', image: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=900&q=80', description: 'A leafy herb with a bright citrus scent.', cost: '$14' },
-      { id: 'hyacinth', name: 'Hyacinth', image: 'https://images.unsplash.com/photo-1487530811176-3780de880c2d?auto=format&fit=crop&w=900&q=80', description: 'A colorful flowering plant with a rich, sweet fragrance.', cost: '$22' },
-    ],
-  },
-  {
-    category: 'Insect Repellent Plants',
-    plants: [
-      { id: 'oregano', name: 'Oregano', image: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=900&q=80', description: 'A fragrant culinary herb that is easy to grow in a sunny spot.', cost: '$10' },
-      { id: 'marigold', name: 'Marigold', image: 'https://images.unsplash.com/photo-1508610048659-a06b669e3321?auto=format&fit=crop&w=900&q=80', description: 'Bright flowers add cheerful color to pots and garden borders.', cost: '$8' },
-      { id: 'geranium', name: 'Geranium', image: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=900&q=80', description: 'A flowering favorite for sunny balconies and window boxes.', cost: '$20' },
-      { id: 'basil', name: 'Basil', image: 'https://images.unsplash.com/photo-1615485500704-8e990f9900f5?auto=format&fit=crop&w=900&q=80', description: 'A fragrant kitchen herb that thrives with sun and regular watering.', cost: '$9' },
-      { id: 'lavender-repellent', name: 'Lavender', image: 'https://images.unsplash.com/photo-1611909023032-2d6b3134ecba?auto=format&fit=crop&w=900&q=80', description: 'Scented purple blooms add beauty to patios and garden beds.', cost: '$20' },
-      { id: 'catnip', name: 'Catnip', image: 'https://images.unsplash.com/photo-1628556270448-4d4e4148e1b1?auto=format&fit=crop&w=900&q=80', description: 'A hardy aromatic herb that is especially popular with cats.', cost: '$13' },
-    ],
-  },
-  {
-    category: 'Medicinal Plants',
-    plants: [
-      { id: 'aloe-medicinal', name: 'Aloe Vera', image: 'https://images.unsplash.com/photo-1596547609652-9fc5d8d428ae?auto=format&fit=crop&w=900&q=80', description: 'A sun-loving succulent with soothing gel inside its leaves.', cost: '$14' },
-      { id: 'echinacea', name: 'Echinacea', image: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=900&q=80', description: 'A daisy-like flowering plant that brings color to a sunny garden.', cost: '$16' },
-      { id: 'peppermint', name: 'Peppermint', image: 'https://images.unsplash.com/photo-1628556270448-4d4e4148e1b1?auto=format&fit=crop&w=900&q=80', description: 'A refreshing culinary herb best grown in its own container.', cost: '$13' },
-      { id: 'lemon-balm-medicinal', name: 'Lemon Balm', image: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=900&q=80', description: 'A leafy herb with a gentle lemon scent.', cost: '$14' },
-      { id: 'chamomile', name: 'Chamomile', image: 'https://images.unsplash.com/photo-1487530811176-3780de880c2d?auto=format&fit=crop&w=900&q=80', description: 'Small, cheerful flowers brighten garden beds and containers.', cost: '$15' },
-      { id: 'calendula', name: 'Calendula', image: 'https://images.unsplash.com/photo-1508610048659-a06b669e3321?auto=format&fit=crop&w=900&q=80', description: 'Golden blooms bring long-lasting color to sunny spaces.', cost: '$12' },
-    ],
-  },
-  {
-    category: 'Low Maintenance Plants',
-    plants: [
-      { id: 'zz-plant', name: 'ZZ Plant', image: 'https://images.unsplash.com/photo-1632207691143-643e2a9a9361?auto=format&fit=crop&w=900&q=80', description: 'A resilient plant that prefers indirect light and infrequent watering.', cost: '$25' },
-      { id: 'pothos', name: 'Pothos', image: 'https://images.unsplash.com/photo-1614594975525-e45190c55d40?auto=format&fit=crop&w=900&q=80', description: 'An adaptable trailing plant that grows well in many indoor spaces.', cost: '$10' },
-      { id: 'snake-plant-easy-care', name: 'Snake Plant', image: 'https://images.unsplash.com/photo-1593696954577-ab3d39317b97?auto=format&fit=crop&w=900&q=80', description: 'An undemanding upright plant that needs little frequent care.', cost: '$15' },
-      { id: 'cast-iron-plant', name: 'Cast Iron Plant', image: 'https://images.unsplash.com/photo-1509423350716-97f9360b4e09?auto=format&fit=crop&w=900&q=80', description: 'A hardy leafy plant that tolerates lower light conditions.', cost: '$20' },
-      { id: 'succulent-mix', name: 'Succulents', image: 'https://images.unsplash.com/photo-1596547609652-9fc5d8d428ae?auto=format&fit=crop&w=900&q=80', description: 'Compact, drought-tolerant plants with varied shapes and colors.', cost: '$18' },
-      { id: 'aglaonema', name: 'Aglaonema', image: 'https://images.unsplash.com/photo-1509423350716-97f9360b4e09?auto=format&fit=crop&w=900&q=80', description: 'A colorful foliage plant that adapts well to indoor life.', cost: '$22' },
-    ],
-  },
-];
+    const plantsArray = [
+        {
+            category: "Air Purifying",
+            plants: [
+                { name: 'Snake Plant', cost: '$15', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fprickleplants.co.uk%2Fcdn%2Fshop%2Fproducts%2Fafacd46a-01de-4899-bc25-9729a4c992cc_1445x.jpg%3Fv%3D1661164092&f=1&nofb=1&ipt=1c40ea812c6c926c345109a62151596dfaf07abbb164738dc98ad60bd142b866&ipo=images' },
+                { name: 'Spider Plant', cost: '$12', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.mos.cms.futurecdn.net%2FTV5qJiYi73bmPocSrjMRck.jpg&f=1&nofb=1&ipt=5c425e5eb08c4ddd182249adde2c72e705ab622947a7c53fb83374d58f6562ef&ipo=images' },
+                { name: 'Peace Lily', cost: '$18', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fbouqs.com%2Fblog%2Fwp-content%2Fuploads%2F2022%2F11%2Fpeace-lily-care.jpg&f=1&nofb=1&ipt=92cd1b5d1f5c55814c11555d4b874fd878691a8e318535569621b050b1be8c30&ipo=images' },
+            ]
+        },
+        {
+            category: "Succulents",
+            plants: [
+                { name: 'Aloe Vera', cost: '$10', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs3.amazonaws.com%2Fplantvillage-production-new%2Fimages%2Fpics%2F000%2F000%2F512%2Foriginal%2F800px-Aloe_Vera.jpg%3F1367951467&f=1&nofb=1&ipt=a0200a4119ba6aa0ec19154b24df3f800c8f55b8bb43b867a98f2cd3d0f046c6&ipo=images' },
+                { name: 'Jade Plant', cost: '$14', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.mos.cms.futurecdn.net%2F2PE5fFa3XthNoH6Jzt7ztJ-1024-80.jpg&f=1&nofb=1&ipt=474ae26e224809ffb707da51e0b09ec91f8e7644fb7aa2e063aafd6a1680f15f&ipo=images' },
+                { name: 'Echeveria', cost: '$11', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.myplantsvalley.com%2Fwp-content%2Fuploads%2F2025%2F02%2FFahmida_Echeveria_succulents_18dfa9c0-7de5-46f9-be36-88cedd4db962.png&f=1&nofb=1&ipt=0b4ffe01cb4ecce6b97f1feb416f52483893ffd34a94937f817cd59d6dd9bb4e&ipo=images' }
+            ]
+        },
+        {
+            category: "Ferns",
+            plants: [
+                { name: 'Boston Fern', cost: '$16', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages.esellerpro.com%2F3048%2FI%2F619%2F66%2FNephrolepis%2520boston%2520fern-10.jpg&f=1&nofb=1&ipt=b878df4b4b61c44452b8fba95270c71bcea78029765c23cd722cddd6e16e17d2&ipo=images' },
+                { name: 'Bird Nest Fern', cost: '$20', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.apartmenttherapy.info%2Fimage%2Fupload%2Ff_auto%2Cq_auto%3Aeco%2Cw_730%2Fgen-workflow%2Fproduct-listing%2Fbirdsnestfernamz&f=1&nofb=1&ipt=827bb20317367cd056d584bd13f2ec96aa3ab947edf06dcf11dc09739cf40d26&ipo=images' },
+                { name: 'Maidenhair Fern', cost: '$19', image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.bhg.com%2Fthmb%2FSuzTKTvdz1Hkk7QHuxtc5LZui88%3D%2F1245x0%2Ffilters%3Ano_upscale()%3Astrip_icc()%2Fsouthern-maidenhair-fern-b67327b2-755015db4d8b4557b6fac4535ad09343.jpg&f=1&nofb=1&ipt=b18b9adf40714a0d497d54f54379a457a67d85e9da562955dbe2b414afedc4c7&ipo=images' }
+            ]
+        }
+    ];
 
-function ProductList({ onHomeClick = () => {} }) {
-  const [showCart, setShowCart] = useState(false);
-  const dispatch = useDispatch();
+    const handleAddToCart = (plant) => {
+        dispatch(addItem(plant));
+    };
 
-  // This expects the reducer to be mounted at state.cart and to initialize items as [].
-  const cartItems = useSelector((state) => state.cart?.items ?? []);
-  const totalCartQuantity = cartItems.reduce(
-    (total, item) => total + (Number(item.quantity) || 1),
-    0
-  );
-
-  const handleAddToCart = (plant) => {
-    dispatch(addItem(plant));
-  };
-
-  const handleHomeClick = (event) => {
-    event.preventDefault();
-    setShowCart(false);
-    onHomeClick();
-  };
-
-  const isInCart = (plant) =>
-    cartItems.some((item) => item.id === plant.id || item.name === plant.name);
-
-  return (
-    <div className="product-page">
-      <header className="navbar">
-        <a className="brand" href="/" onClick={handleHomeClick}>
-          <span className="brand-name">Paradise Nursery</span>
-          <span className="brand-tagline">Where Green Meets Serenity</span>
-        </a>
-
-        <nav className="nav-links" aria-label="Main navigation">
-          <button
-            type="button"
-            className={!showCart ? 'nav-link active' : 'nav-link'}
-            onClick={() => setShowCart(false)}
-          >
-            Plants
-          </button>
-          <button
-            type="button"
-            className={showCart ? 'nav-link active cart-link' : 'nav-link cart-link'}
-            onClick={() => setShowCart(true)}
-            aria-label={`Open cart, ${totalCartQuantity} items`}
-          >
-            <span aria-hidden="true">🛒</span>
-            <span className="cart-count">{totalCartQuantity}</span>
-          </button>
-        </nav>
-      </header>
-
-      {showCart ? (
-        <CartItem onContinueShopping={() => setShowCart(false)} />
-      ) : (
-        <main className="product-grid">
-          {plantsArray.map((group) => (
-            <section className="category-section" key={group.category}>
-              <div className="plantname_heading">
-                <h2 className="plant_heading">{group.category}</h2>
-              </div>
-
-              <div className="product-list">
-                {group.plants.map((plant) => {
-                  const added = isInCart(plant);
-
-                  return (
-                    <article className="product-card" key={plant.id}>
-                      <img
-                        className="product-image"
-                        src={plant.image}
-                        alt={plant.name}
-                        loading="lazy"
-                        onError={(event) => {
-                          event.currentTarget.onerror = null;
-                          event.currentTarget.src = FALLBACK_IMAGE;
-                        }}
-                      />
-                      <div className="product-card-content">
-                        <h3 className="product-title">{plant.name}</h3>
-                        <p className="product-description">{plant.description}</p>
-                        <p className="product-price">{plant.cost}</p>
-                        <button
-                          type="button"
-                          className={`product-button${added ? ' added-to-cart' : ''}`}
-                          disabled={added}
-                          onClick={() => handleAddToCart(plant)}
-                        >
-                          {added ? 'Added to Cart' : 'Add to Cart'}
-                        </button>
-                      </div>
-                    </article>
-                  );
-                })}
-              </div>
-            </section>
-          ))}
-        </main>
-      )}
-    </div>
-  );
+    return (
+        <div>
+            <div className="navbar">
+                <div className="tag">
+                    <a href="#" onClick={(e) => { e.preventDefault(); onHomeClick(); }}>
+                        <div className="tag_home_link">
+                            <h3>Paradise Nursery</h3>
+                            <span>Where Green Meets Serenity</span>
+                        </div>
+                    </a>
+                </div>
+                <div className="ul">
+                    <div>
+                        <a href="#" onClick={(e) => { e.preventDefault(); setShowCart(false); }}>Plants</a>
+                    </div>
+                    <div>
+                        <a href="#" onClick={(e) => { e.preventDefault(); setShowCart(true); }} className="cart">
+                            🛒 <span className="cart_quantity_count">{totalCartQuantity}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            {showCart ? (
+                <CartItem onContinueShopping={() => setShowCart(false)} />
+            ) : (
+                <div className="product-grid">
+                    {plantsArray.map((categoryGroup, index) => (
+                        <div key={index} style={{ width: '100%' }}>
+                            <div className="plantname_heading">
+                                <h2 className="plant_heading">{categoryGroup.category}</h2>
+                            </div>
+                            <div className="product-list">
+                                {categoryGroup.plants.map((plant, pIndex) => (
+                                    <div className="product-card" key={pIndex}>
+                                        <img className="product-image" src={plant.image} alt={plant.name} />
+                                        <div className="product-title">{plant.name}</div>
+                                        <div className="product-price">{plant.cost}</div>
+                                        <button 
+                                            className={`product-button ${cartItems.some(item => item.name === plant.name) ? 'added-to-cart' : ''}`}
+                                            disabled={cartItems.some(item => item.name === plant.name)}
+                                            onClick={() => handleAddToCart(plant)}
+                                        >
+                                            {cartItems.some(item => item.name === plant.name) ? 'Added to Cart' : 'Add to Cart'}
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
 }
 
 export default ProductList;
